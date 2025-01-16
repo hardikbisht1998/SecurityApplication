@@ -1,0 +1,5 @@
+-while commenting the userService class
+Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager.
+
+-while uncommenting
+Global AuthenticationManager configured with UserDetailsService bean with name userService
