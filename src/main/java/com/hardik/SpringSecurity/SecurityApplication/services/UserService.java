@@ -30,17 +30,17 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
 
-
-
-
-
     @Autowired
     ModelMapper mapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
-                .orElseThrow(()->new ResourceNotFoundException("User of "+username+" not found " ));
+                .orElseThrow(()->new BadCredentialsException("User of "+username+" not found"));
+    }
+
+    public User getUserById(Long id){
+        return userRepository.findById(id).orElseThrow(()->new BadCredentialsException("User with id "+ id+" not found "));
     }
 
     public UserDTO signUp(SignUpDTO signUpDTO) {

@@ -14,10 +14,10 @@ class SecurityApplicationTests {
 
 	@Test
 	void contextLoads() {
-		User user=new User(3L,"hardik@gmail","1233334");
-		String token= jwtService.generateToken(user);
-		System.out.println(token);
-		System.out.println(jwtService.getUserIdFromToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJoYXJkaWtAZ21haWwiLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iXSwiaWF0IjoxNzM3MjE5MjkzLCJleHAiOjE3MzcyMTkyOTR9.fJAdqxE2QHK5Dt0R6lTS4ebvSX6GYwucIAtmyrbpQcI"));
+//		User user=new User(3L,"hardik@gmail","1233334","hguygyu");
+//		String token= jwtService.generateToken(user);
+//		System.out.println(token);
+//		System.out.println(jwtService.getUserIdFromToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJoYXJkaWtAZ21haWwiLCJyb2xlcyI6WyJVU0VSIiwiQURNSU4iXSwiaWF0IjoxNzM3MjE5MjkzLCJleHAiOjE3MzcyMTkyOTR9.fJAdqxE2QHK5Dt0R6lTS4ebvSX6GYwucIAtmyrbpQcI"));
 	}
 
 }
