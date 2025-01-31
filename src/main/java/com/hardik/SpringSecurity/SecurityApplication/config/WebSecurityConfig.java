@@ -1,6 +1,7 @@
 package com.hardik.SpringSecurity.SecurityApplication.config;
 
 import com.hardik.SpringSecurity.SecurityApplication.filter.JwtAuthFilter;
+import com.hardik.SpringSecurity.SecurityApplication.handler.OAuth2SuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,16 +27,22 @@ public class WebSecurityConfig {
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
 
+    @Autowired
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
+
    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/post","/auth/**").permitAll()
+                        .requestMatchers("/post","/auth/**","/home.html").permitAll()
 //                        .requestMatchers("/post/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                         .csrf(csrfConfig->csrfConfig.disable())
                         .sessionManagement(sessionConfig->sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oauth2Config-> oauth2Config
+                        .failureUrl("/login?error=true")
+                        .successHandler(oAuth2SuccessHandler));
 //                .formLogin(Customizer.withDefaults());
 
         return  httpSecurity.build();
