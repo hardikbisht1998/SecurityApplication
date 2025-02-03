@@ -1,12 +1,16 @@
 package com.hardik.SpringSecurity.SecurityApplication.dto;
 
+import com.hardik.SpringSecurity.SecurityApplication.entities.enums.Role;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class SignUpDTO {
-    String email;
-    String password;
-    String name;
+    private String email;
+    private String password;
+    private String name;
+    private Set<Role> roles;
 
 
 

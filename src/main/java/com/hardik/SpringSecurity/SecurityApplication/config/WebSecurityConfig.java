@@ -1,10 +1,12 @@
 package com.hardik.SpringSecurity.SecurityApplication.config;
 
+import com.hardik.SpringSecurity.SecurityApplication.entities.enums.Role;
 import com.hardik.SpringSecurity.SecurityApplication.filter.JwtAuthFilter;
 import com.hardik.SpringSecurity.SecurityApplication.handler.OAuth2SuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -30,11 +32,17 @@ public class WebSecurityConfig {
     @Autowired
     private OAuth2SuccessHandler oAuth2SuccessHandler;
 
+    private static final String[] publicRoutes={
+            "/error","/auth/**","/home.html"
+    };
+
    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/post","/auth/**","/home.html").permitAll()
+                        .requestMatchers(publicRoutes).permitAll()
+                        .requestMatchers(HttpMethod.GET,"/post/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/post/**").hasAnyRole(Role.ADMIN.name(),Role.CREATOR.name())
 //                        .requestMatchers("/post/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                         .csrf(csrfConfig->csrfConfig.disable())

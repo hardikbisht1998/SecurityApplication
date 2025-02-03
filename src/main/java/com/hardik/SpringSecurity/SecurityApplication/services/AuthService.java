@@ -24,6 +24,9 @@ public class AuthService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SessionService sessionService;
+
 
 
     public LoginResponseDTO login(LoginDTO loginDTO) {
@@ -32,12 +35,14 @@ public class AuthService {
         User user=(User)authentication.getPrincipal();
         String accessToken= jwtService.generateAccessToken(user);
         String refreshToken= jwtService.generateRefreshToken(user);
+        sessionService.generateNewSession(user,refreshToken);
         return LoginResponseDTO.builder().id(user.getId()).refreshToken(refreshToken).accessToken(accessToken).build();
 
     }
 
     public LoginResponseDTO refreshToken(String refreshToken) {
         Long userId=jwtService.getUserIdFromToken(refreshToken);
+        sessionService.validateSession(refreshToken);
         User user=userService.getUserById(userId);
         String accessToken= jwtService.generateAccessToken(user);
         return LoginResponseDTO.builder().id(user.getId()).refreshToken(refreshToken).accessToken(accessToken).build();

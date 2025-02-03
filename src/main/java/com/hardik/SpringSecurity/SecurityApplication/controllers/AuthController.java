@@ -45,8 +45,10 @@ public class AuthController {
 
         Cookie cookie=new Cookie("refreshToken",loginResponseDTO.getRefreshToken());
         cookie.setHttpOnly(true);
-        cookie.setSecure("production".equals(deployEnv));
+//        cookie.setSecure("prodution".equals(deployEnv));
         httpServletResponse.addCookie(cookie);
+        System.out.println(loginResponseDTO.toString());
+        System.out.println("ioopijihguuvgyctfugihknbvchytfugibkjhvcghfyugibkjvchgfygiuhkbjvchfghj");
         return ResponseEntity.ok(loginResponseDTO);
 
     }
