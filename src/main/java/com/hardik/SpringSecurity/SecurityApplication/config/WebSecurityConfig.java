@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,6 +27,7 @@ import static com.hardik.SpringSecurity.SecurityApplication.entities.enums.Permi
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
     @Autowired
@@ -43,12 +45,11 @@ public class WebSecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(publicRoutes).permitAll()
-                        .requestMatchers(HttpMethod.GET,"/post/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/post/**").hasAnyRole(Role.ADMIN.name(),Role.CREATOR.name())
-                        .requestMatchers(HttpMethod.POST,"/post/**").hasAuthority(POST_CREATE.name())
-                        .requestMatchers(HttpMethod.GET,"/post/**").hasAuthority(POST_VIEW.name())
-                        .requestMatchers(HttpMethod.PUT,"/post/**").hasAuthority(POST_UPDATE.name())
-                        .requestMatchers(HttpMethod.DELETE,"/post/**").hasAuthority(POST_DELETE.name())
+//                        .requestMatchers(HttpMethod.GET,"/post/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST,"/post/**").hasAnyRole(Role.ADMIN.name(),Role.CREATOR.name())
+//                        .requestMatchers(HttpMethod.POST,"/post/**").hasAuthority(POST_CREATE.name())
+//                        .requestMatchers(HttpMethod.PUT,"/post/**").hasAuthority(POST_UPDATE.name())
+//                        .requestMatchers(HttpMethod.DELETE,"/post/**").hasAuthority(POST_DELETE.name())
 //                        .requestMatchers("/post/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                         .csrf(csrfConfig->csrfConfig.disable())
